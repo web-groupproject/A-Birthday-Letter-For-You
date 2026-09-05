@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Birthday Letter For You</title>
+    <!-- Google Fonts: สไตล์หรูหรา ผู้ใหญ่ -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Prompt:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Miw.css">
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #a82840 0%, #d84b65 50%, #881b30 100%);
+            --card-bg: #fffbf7;
+            --text-main: #3a2e2b;
+            --text-heading: #8d1c31;
+            --film-dark: #1a1a1a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Prompt', 'Cormorant Garamond', serif;
+            color: var(--text-main);
+            background: var(--bg-gradient);
+            position: relative;
+        }
+
+        /* Floating Hearts Background */
+        .hearts-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .heart-particle {
+            position: absolute;
+            bottom: -50px;
+            color: rgba(255, 255, 255, 0.25);
+            font-size: 20px;
+            user-select: none;
+            animation: floatUp 10s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Fullscreen Slider Wrapper */
+        .slider-wrapper {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            z-index: 2;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            transform: scale(0.98);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 70px;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        /* ดอกไม้จริงตกแต่งมุม */
+        .real-flower {
+            position: absolute;
+            width: 300px;
+            pointer-events: none;
+            z-index: 10;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+        }
+        .rea-flower {
+            position: absolute;
+            width: 1100px;
+            pointer-events: none;
+            z-index: 10;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+        }
+        .re-flower {
+            position: absolute;
+            width: 1100px;
+            pointer-events: none;
+            z-index: 10;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+        }.r-flower {
+            position: absolute;
+            width: 1100px;
+            pointer-events: none;
+            z-index: 10;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+        }
+        .flower-top-left { top: -35px; left: -95px; transform: rotate(-10deg); }
+        .flower-bottom-right { bottom: -150px; right: -400px; transform: rotate(0deg); }
+        .flower-bottom-righ { bottom: -150px; right: 1200px; transform: rotate(0deg); }
+        .flower-bottom-rig { bottom: -150px; right: -460px; transform: rotate(0deg); }
+
+        /* Navigation Buttons */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.8rem;
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .nav-btn:hover { 
+            background: rgba(255, 255, 255, 0.95); 
+            color: var(--text-heading);
+            transform: translateY(-50%) scale(1.1); 
+        }
+        .prev-btn { left: 20px; }
+        .next-btn { right: 20px; }
+
+        .page-indicator {
+            position: absolute;
+            bottom: 15px;
+            background: rgba(0, 0, 0, 0.4);
+            color: rgba(255, 255, 255, 0.9);
+            padding: 5px 18px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            letter-spacing: 1.5px;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Header & Titles */
+        .title-elegant {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-heading);
+            font-size: 2rem;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .text-body {
+            font-family: 'Cormorant Garamond', 'Prompt', serif;
+            font-size: 1.35rem;
+            line-height: 1.8;
+            color: #4a3c38;
+        }
+
+        /* Envelope */
+        .letter-scene {
+            position: relative;
+            width: 360px;
+            height: 240px;
+            margin-top: 40px;
+            cursor: pointer;
+        }
+
+        .envelope-box {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #ab3348;
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            overflow: visible;
+        }
+
+        .envelope-top-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 180px solid transparent;
+            border-right: 180px solid transparent;
+            border-top: 130px solid #922639;
+            transform-origin: top;
+            transition: transform 0.5s ease-in-out;
+            z-index: 5;
+        }
+
+        .letter-paper {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            width: 330px;
+            height: 210px;
+            background: var(--card-bg);
+            border-radius: 6px;
+            padding: 25px 20px;
+            text-align: center;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .envelope-pocket-front {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 180px solid #bd3e55;
+            border-right: 180px solid #bd3e55;
+            border-top: 125px solid transparent;
+            border-bottom: 115px solid #bd3e55;
+            border-radius: 0 0 8px 8px;
+            z-index: 3;
+        }
+
+        .letter-scene.open .envelope-top-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .letter-scene.open .letter-paper {
+            transform: translateY(-130px);
+            height: 230px;
+            z-index: 6;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        /* GRID 6 รูปภาพต่อหน้า (3x2) */
+        .film-grid-6 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px 25px;
+            width: 100%;
+            max-width: 1000px;
+            justify-items: center;
+            align-items: center;
+        }
+
+        .film-frame-sm {
+            background: var(--film-dark);
+            padding: 10px 10px 20px 10px;
+            border-radius: 4px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            max-width: 280px;
+            cursor: pointer;
+        }
+
+        .film-frame-sm::before, .film-frame-sm::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: repeating-linear-gradient(90deg, #fff, #fff 7px, transparent 7px, transparent 14px);
+        }
+        .film-frame-sm::before { top: 3px; }
+        .film-frame-sm::after { bottom: 3px; }
+
+        .film-frame-sm img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border: 1px solid #333;
+            border-radius: 2px;
+            display: block;
+        }
+
+        .film-caption-sm {
+            color: #f0e2df;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 6px;
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .tilt-left { transform: rotate(-4deg); }
+        .tilt-right { transform: rotate(4deg); }
+        .tilt-left:hover, .tilt-right:hover { 
+            transform: rotate(0deg) scale(1.08) translateY(-5px); 
+            z-index: 20; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        /* LIGHTBOX (ระบบขยายรูปภาพฟิล์ม) */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .lightbox-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-modal {
+            transform: scale(0.7);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+
+        .lightbox-overlay.active .lightbox-modal {
+            transform: scale(1);
+        }
+
+        .lightbox-modal .film-frame-sm {
+            max-width: 650px;
+            width: 85vw;
+            padding: 18px 18px 30px 18px;
+            cursor: default;
+            transform: none !important;
+        }
+
+        .lightbox-modal .film-frame-sm img {
+            height: 55vh;
+            max-height: 500px;
+        }
+
+        .lightbox-modal .film-caption-sm {
+            font-size: 1.4rem;
+            margin-top: 12px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -25px;
+            right: -25px;
+            background: var(--text-heading);
+            color: white;
+            border: 2px solid #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            transition: transform 0.2s;
+        }
+        .lightbox-close:hover { transform: scale(1.1); }
+
+        /* General Card Box */
+        .card-box {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 40px 50px;
+            width: 100%;
+            max-width: 750px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            text-align: center;
+        }
+
+        /* Timeline Items (สำหรับหน้าใหม่ PAGE 10) */
+        .timeline-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 15px;
+            text-align: left;
+        }
+        .timeline-item {
+            background: rgba(141, 28, 49, 0.05);
+            border-left: 4px solid var(--text-heading);
+            padding: 12px 20px;
+            border-radius: 0 8px 8px 0;
+        }
+        .timeline-date {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            margin-bottom: 2px;
+        }
+
+        /* เครื่องเล่นเพลง CD */
+        .cd-player-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            background: rgba(255, 255, 255, 0.75);
+            padding: 30px 45px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        .cd-disc {
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle, #222 35%, #111 36%, #444 38%, #111 65%, #222 68%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .cd-disc.playing {
+            animation: spin 8s linear infinite;
+        }
+
+        .cd-inner {
+            width: 50px;
+            height: 50px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            border: 4px solid var(--text-heading);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: bold;
+            color: var(--text-heading);
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .play-btn {
+            background: var(--text-heading);
+            color: #fff;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(141, 28, 49, 0.3);
+            transition: all 0.3s ease;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        .play-btn:hover {
+            background: #a82840;
+            transform: scale(1.05);
+        }
+
+        /* Responsive */
+        @media (max-width: 850px) {
+            .film-grid-6 { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .film-frame-sm img { height: 120px; }
+            .slide { padding: 15px 35px; }
+            .cd-player-container { flex-direction: column; text-align: center; }
+        }
+        .film-strip, 
+.film-card, 
+div[class*="film"], 
+div[class*="strip"] {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: #e0e0e0 !important;
+}
+
+/* เปลี่ยนสีแถบรูหนามเตยฟิล์มด้านบน-ล่าง ให้กลกลืนกับพื้นหลังสีขาว */
+.film-strip::before, .film-strip::after,
+.film-card::before, .film-card::after {
+    filter: invert(1); /* สลับสีแถบฟิล์มจากดำเป็นขาว */
+}
+
+/* หากในหน้าแกลเลอรีของคุณใช้คลาสที่เป็นลายฟิล์มหนังขอบดำ ให้เพิ่มโค้ดสลับสีนี้ทับลงไปครับ */
+.film-frame, .photo-film-card {
+    background: #ffffff !important;
+    border: 1px solid #dcdcdc !important;
+    color: #222222 !important;
+}
+
+/* ทำการปรับรูกล้องฟิล์ม (Sprockets) ด้านบน-ล่าง ให้เข้ากับกรอบขาว (ถ้ามี) */
+.film-frame::before, .film-frame::after {
+    background-image: radial-gradient(circle, #ffffff 40%, transparent 41%);
+}
+
+
+    </style>
+    
+</head>
+<body>
+
+    <!-- Floating Hearts -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- Lightbox Modal สำหรับขยายรูปภาพ -->
+    <div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox(event)">
+        <div class="lightbox-modal">
+            <button class="lightbox-close" onclick="closeLightbox(event)">✕</button>
+            <div class="film-frame-sm" id="lightboxFrame">
+                <img id="lightboxImg" src="" alt="Zoomed Photo">
+                <div class="film-caption-sm" id="lightboxCaption"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slider-wrapper">
+        <!-- Nav Buttons -->
+        <button class="nav-btn prev-btn" onclick="prevSlide()">❮</button>
+        <button class="nav-btn next-btn" onclick="nextSlide()">❯</button>
+        <div class="page-indicator" id="pageIndicator">PAGE 1 / 15</div>
+
+        <!-- Flowers -->
+        <img src="img/img miw/rose 1.png" class="real-flower flower-top-left" alt="Flower">
+        <img src="img/img miw/rose 2.png" class="rea-flower flower-bottom-righ" alt="Flower">
+        <img src="img/img miw/rose 2.png" class="re-flower flower-bottom-rig" alt="Flower">
+        <img src="img/img miw/rose 2.png" class="r-flower flower-bottom-rig" alt="Flower">
+        
+        
+
+        <!-- PAGE 1: Envelope -->
+        <div class="slide active">
+            <h2 class="title-elegant" style="color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">Click to Open Letter</h2>
+            <div class="letter-scene" onclick="toggleEnvelope(this)">
+                <div class="envelope-box">
+                    <div class="envelope-top-flap"></div>
+                    <div class="letter-paper">
+                        <h2 class="title-elegant" style="font-size: 1.6rem; margin-bottom: 5px;">Happy Birthday</h2>
+                        <p class="text-body" style="font-size: 1.15rem;">My Dearest Love ❤️<br>Crissanou</p>
+                    </div>
+                    <div class="envelope-pocket-front"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 2: Music Player -->
+        <div class="slide">
+            <div class="card-box">
+                <h3 class="title-elegant">Songs That Sound Like You</h3>
+                <div class="cd-player-container">
+                    <div class="cd-disc" id="cdDisc">
+                        <div class="cd-inner">LOVE</div>
+                    </div>
+                    <div style="text-align: left;">
+                        <p class="title-elegant" style="font-size: 1.4rem; margin-bottom: 2px;">This song for you</p>
+                        <p class="text-body" style="font-size: 1.1rem; color: #777;">Click Play to listen</p>
+                        <audio id="bgMusic" loop>
+                            <source src="music/p.s inloveyou.mp3" type="audio/mpeg">
+                        </audio>
+                        <button class="play-btn" id="playBtn" onclick="toggleMusic()">▶ Play Song</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 3: Film Gallery (6 รูป) -->
+        <div class="slide">
+            <div class="film-grid-6">
+                <div class="film-frame-sm tilt-left" onclick="openLightbox(this)">
+                    <img src="img/img miw/1.jpg" alt="Memory 1">
+                    <div class="film-caption-sm">Our First Trip</div>
+                </div>
+                <div class="film-frame-sm tilt-right" onclick="openLightbox(this)">
+                    <img src="img/img miw/2.jpg" alt="Memory 2">
+                    <div class="film-caption-sm">Your Cute Smile</div>
+                </div>
+                <div class="film-frame-sm tilt-left" onclick="openLightbox(this)">
+                    <img src="img/img miw/3.jpg" alt="Memory 3">
+                    <div class="film-caption-sm">Coffee Date</div>
+                </div>
+                <div class="film-frame-sm tilt-right" onclick="openLightbox(this)">
+                    <img src="img/img miw/4.jpg" alt="Memory 4">
+                    <div class="film-caption-sm">Sunset Moment</div>
+                </div>
+                <div class="film-frame-sm tilt-left" onclick="openLightbox(this)">
+                    <img src="img/img miw/5.jpg" alt="Memory 5">
+                    <div class="film-caption-sm">Park Walk</div>
+                </div>
+                <div class="film-frame-sm tilt-right" onclick="openLightbox(this)">
+                    <img src="img/img miw/6.jpg" alt="Memory 6">
+                    <div class="film-caption-sm">Dinner Night</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 4: 10 Things I Love About You (Part 1) -->
+        <div class="slide">
+            <div class="card-box">
+                <h3 class="title-elegant">10 Things I Love About You</h3>
+                <ol class="text-body" style="text-align: left; margin-left: 40px; line-height: 2;">
+                    <li>.nou mi khuam pen phu yai nu phayayarm jai yen kup miw </li>
+                    <li>nou tung jai huk lh du lae miw hai dee t sout thg bang khung miw si ao tae jai to eng pai nit nueng eiei</li>
+                    <li>nou pen khum sa baiy jai khrng miw mi khuam souk thouk khun t dai u nam nou</li>
+                    <li>nou sh jai lhg lek2 noy2 vun sum khun lue vun khop hrp nou ja br khei la leiii</li>
+                    <li>muk khuam khy lin khuam nar huk khrng nou vela nou u kup miw</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- PAGE 5: 10 Things I Love About You (Part 2) -->
+        <div class="slide">
+            <div class="card-box">
+                <h3 class="title-elegant">10 Things I Love About You</h3>
+                <ol start="6" class="text-body" style="text-align: left; margin-left: 40px; line-height: 2;">
+                    <li>muk t nou pen khn aod thon pen khn dou </li>
+                    <li>muk t nou khit lhg rna khod khrng hao nou pen khn kep ngern dai</li>
+                    <li>.nou pen muean bn lung t2 hai khuam aop oun hai nou talrt</li>
+                    <li>.kan t u khang2 miw br var si thouk lue  souk u ka br khei poy mue miw pai sh</li>
+                    <li>veo ta t naem miw bb aop oun pen orm krt t prt phai hai miw thouk thuea.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- PAGE 6: Film Gallery (6 รูป) -->
+        <div class="slide">
+            <div class="film-grid-6">
+                <div class="film-frame-sm tilt-right" onclick="openLightbox(this)">
+                    <img src="img/img miw/7.jpg" alt="Memory 7">
+                    <div class="film-caption-sm">Sea Breeze</div>
+                </div>
+                <div class="film-frame-sm tilt-left" onclick="openLightbox(this)">
+                    <img src="img/img miw/8.jpg" alt="Memory 8">
+                    <div class="film-caption-sm">Under The Sky</div>
+                </div>
+                <div class="film-frame-sm tilt-right" onclick="openLightbox(this)">
+                    <img src="img/img miw/9.jpg" alt="Memory 9">
+                    <div class="film-caption-sm">Sweet Dreams</div>
+                </div>
+                <div class="film-frame-sm tilt-left" onclick="openLightbox(this)">
+                    <img src="img/img miw/10.jpg" alt="Memory 10">
+                    <div class="film-caption-sm">Holding Hands</div>
+                </div>
+                <div class="film-frame-sm tilt-right" onclick="openLightbox(this)">
+                    <img src="img/img miw/11.jpg" alt="Memory 11">
+                    <div class="film-caption-sm">Everyday Magic</div>
+                </div>
+                <div class="film-frame-sm tilt-left" onclick="openLightbox(this)">
+                    <img src="img/img miw/12.jpg" alt="Memory 12">
+                    <div class="film-caption-sm">Side By Side</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 7: Film Gallery (6 รูป) -->
+        <div class="slide">
+            <div class="film-grid-6">
+                <div class="film-frame-sm tilt-left" onclick="openLightbox(this)">
+                    <img src="img/img miw/13.jpg" alt="Memory 13">
+                    <div class="film-caption-sm">Mountain Trip</div>
+                </div>
+                <div class="film-frame-sm tilt-right" onclick="openLightbox(this)">
+                    <img src="img/img miw/14.jpg" alt="Memory 14">
+                    <div class="film-caption-sm">River View</div>
+                </div>
+                <div class="film-frame-sm tilt-left" onclick="openLightbox(this)">
+                    <img src="img/img miw/15.jpg" alt="Memory 15">
+                    <div class="film-caption-sm">Forest Walk</div>
+                </div>
+                <div class="film-frame-sm tilt-right" onclick="openLightbox(this)">
+                    <img src="img/img miw/16.jpg" alt="Memory 16">
+                    <div class="film-caption-sm">City Lights</div>
+                </div>
+                <div class="film-frame-sm tilt-left" onclick="openLightbox(this)">
+                    <img src="img/img miw/17.jpg" alt="Memory 17">
+                    <div class="film-caption-sm">Favorite Cafe</div>
+                </div>
+                <div class="film-frame-sm tilt-right" onclick="openLightbox(this)">
+                    <img src="img/img miw/18.jpg" alt="Memory 18">
+                    <div class="film-caption-sm">Sunny Day</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 8: Special Message -->
+        <div class="slide">
+            <div class="card-box">
+                <h3 class="title-elegant">To My Dearest</h3>
+                <p class="text-body">
+                    Khrp jao thouk zuang vela t khop kun ma br var si souk lue thouk nou ka u khang miw smer br var rna khod khung nar khuam huk hao si pen bb dh tae miw ka pha va na khr hai nou y u brn ny br pai sh u sang rna khod pai nam kun vun hu la terp to pai nam kun der un dh t miw h br thuek br trng ka u tuk tuean miw der. Vun kert py ny nou ka pen phu yai eik py leo khr hai mi khuam souk nai thouk2 mue der hai mi tae hoy yim laiy2 miw huk nou der u sang rna khod pai nam kun nah.
+                    
+                </p>
+            </div>
+        </div>
+
+        <!-- PAGE 9: Film Gallery (6 รูป) -->
+        <div class="slide">
+            <div class="film-grid-6">
+                <div class="film-frame-sm tilt-right" onclick="openLightbox(this)">
+                    <img src="img/img miw/19.jpg" alt="Memory 19">
+                    <div class="film-caption-sm">Rainy Vibe</div>
+                </div>
+                <div class="film-frame-sm tilt-left" onclick="openLightbox(this)">
+                    <img src="img/img miw/20.jpg" alt="Memory 20">
+                    <div class="film-caption-sm">Camping Night</div>
+                </div>
+                <div class="film-frame-sm tilt-right" onclick="openLightbox(this)">
+                    <img src="img/img miw/21.jpg" alt="Memory 21">
+                    <div class="film-caption-sm">Smile Together</div>
+                </div>
+                <div class="film-frame-sm tilt-left" onclick="openLightbox(this)">
+                    <img src="img/img miw/22.jpg" alt="Memory 22">
+                    <div class="film-caption-sm">Warm Hug</div>
+                </div>
+                <div class="film-frame-sm tilt-right" onclick="openLightbox(this)">
+                    <img src="img/img miw/23.jpg" alt="Memory 23">
+                    <div class="film-caption-sm">Best Memories</div>
+                </div>
+                <div class="film-frame-sm tilt-left" onclick="openLightbox(this)">
+                    <img src="img/img miw/24.jpg" alt="Memory 24">
+                    <div class="film-caption-sm">Forever & Ever</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 10: Memory Timeline (เปลี่ยนใหม่แทนตัวนับเวลาเดิม) -->
+        <div class="slide">
+            <div class="card-box">
+                <h3 class="title-elegant">Our Journey Together</h3>
+                <div class="timeline-container">
+                    <div class="timeline-item">
+                        <div class="timeline-date">DAY 1 — The Beginning</div>
+                        <p class="text-body" style="font-size: 1.1rem;">Mue laek t jer kun u 3or h hai miw mi khuam souk hoy yim khrng nou trn nun khod aop oun leiii sh jai miw khodd dee</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">SPECIAL MOMENT — First Trip</div>
+                        <p class="text-body" style="font-size: 1.1rem;">Kan dai u nam kun khung ka trn ma atp khun laek dai zai cvit u nam kun hn hu e yh laiy2 yang h hai hao hu juk kun laiy khuen.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">PRESENT & FOREVER — Celebrating You</div>
+                        <p class="text-body" style="font-size: 1.1rem;">thouk2 mue lh t pharn ma miw khr u khang2 nou pai talrt khr hai hao u nam kun mi khuam souk bb ny pai talrt der.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 11: Film Gallery (6 รูป) -->
+        <div class="slide">
+            <div class="film-grid-6">
+                <div class="film-frame-sm tilt-left" onclick="openLightbox(this)">
+                    <img src="img/img miw/25.jpg" alt="Memory 25">
+                    <div class="film-caption-sm">Cute Pet</div>
+                </div>
+                <div class="film-frame-sm tilt-right" onclick="openLightbox(this)">
+                    <img src="img/img miw/26.jpg" alt="Memory 26">
+                    <div class="film-caption-sm">Road Trip</div>
+                </div>
+                <div class="film-frame-sm tilt-left" onclick="openLightbox(this)">
+                    <img src="img/img miw/27.jpg" alt="Memory 27">
+                    <div class="film-caption-sm">Picnic Day</div>
+                </div>
+                <div class="film-frame-sm tilt-right" onclick="openLightbox(this)">
+                    <img src="img/img miw/28.jpg" alt="Memory 28">
+                    <div class="film-caption-sm">Delicious Food</div>
+                </div>
+                <div class="film-frame-sm tilt-left" onclick="openLightbox(this)">
+                    <img src="img/img miw/29.jpg" alt="Memory 29">
+                    <div class="film-caption-sm">Night Out</div>
+                </div>
+                <div class="film-frame-sm tilt-right" onclick="openLightbox(this)">
+                    <img src="img/img miw/30.jpg" alt="Memory 30">
+                    <div class="film-caption-sm">Sweet Moment</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 12: Favorite Memory -->
+        <div class="slide">
+            <div class="card-box">
+                <h3 class="title-elegant">Every Moment With You</h3>
+                <p class="text-body">
+                    .khuam souk khrng miw br dai khuen t var miw si u brn dh tae khuam souk khrng miw khue kan t mi nou u khang2 smer lh u kup miw nai thouk2 brn t pharn ma nou pa ti but kup miw bb jao ying smer bang t ka ang mi la leii pai nae tae luam2 leo ka dee lei lh t mi nou u bb ny kup miw khr hai nou u khieng khang miw pai bb ny talrt nahhh
+                </p>
+            </div>
+        </div>
+
+        <!-- PAGE 13: Film Gallery (6 รูป) -->
+        <div class="slide">
+            <div class="film-grid-6">
+                <div class="film-frame-sm tilt-right" onclick="openLightbox(this)">
+                    <img src="img/img miw/31.jpg" alt="Memory 31">
+                    <div class="film-caption-sm">Summer Vibe</div>
+                </div>
+                <div class="film-frame-sm tilt-left" onclick="openLightbox(this)">
+                    <img src="img/img miw/32.jpg" alt="Memory 32">
+                    <div class="film-caption-sm">Happy Hour</div>
+                </div>
+                <div class="film-frame-sm tilt-right" onclick="openLightbox(this)">
+                    <img src="img/img miw/33.jpg" alt="Memory 33">
+                    <div class="film-caption-sm">Bright Future</div>
+                </div>
+                <div class="film-frame-sm tilt-left" onclick="openLightbox(this)">
+                    <img src="img/img miw/34.jpg" alt="Memory 34">
+                    <div class="film-caption-sm">Pure Joy</div>
+                </div>
+                <div class="film-frame-sm tilt-right" onclick="openLightbox(this)">
+                    <img src="img/img miw/35.jpg" alt="Memory 35">
+                    <div class="film-caption-sm">Always Love</div>
+                </div>
+                <div class="film-frame-sm tilt-left" onclick="openLightbox(this)">
+                    <img src="img/img miw/36.jpg" alt="Memory 36">
+                    <div class="film-caption-sm">Forever Us</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 14: Birthday Wish -->
+        <div class="slide">
+            <div class="card-box">
+                <h3 class="title-elegant">My Forever Wish</h3>
+                <p class="text-body">
+                    Vun kert py ni miw ka br mi yh hai laiyy der mi khr ouay phon hai nou pa sop phon sum let nai thouk2 pao maiy khuam fun t nou khit vai fun vai mi khuam souk lh hoy yim nai thouk2 mue khr hai lok ny jai dee kup nou br var e yh si kert khuen miw si khr u khang2 nou bb ny talrt pai.
+                </p>
+            </div>
+        </div>
+
+        <!-- PAGE 15: Final Slide -->
+        <div class="slide">
+            <div class="card-box" style="background: transparent; border: none; box-shadow: none;">
+                <h2 class="title-elegant" style="font-size: 3rem; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.4);">Happy Birthday, My Love</h2>
+                <p class="text-body" style="color: rgba(255,255,255,0.9); font-size: 1.4rem; margin-top: 15px;">Always & Forever ❤️</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Floating Hearts Background
+        const heartsContainer = document.getElementById('heartsContainer');
+        for (let i = 0; i < 25; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-particle');
+            heart.innerHTML = '♥';
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.animationDuration = `${6 + Math.random() * 8}s`;
+            heart.style.animationDelay = `${Math.random() * 5}s`;
+            heart.style.fontSize = `${14 + Math.random() * 20}px`;
+            heartsContainer.appendChild(heart);
+        }
+
+        // Slider Navigation Controls
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const pageIndicator = document.getElementById('pageIndicator');
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+            pageIndicator.textContent = `PAGE ${currentSlide + 1} / ${slides.length}`;
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        // Envelope Open Toggle
+        function toggleEnvelope(element) {
+            element.classList.toggle('open');
+        }
+
+        // Music Player Toggle Control
+        const audio = document.getElementById('bgMusic');
+        const cdDisc = document.getElementById('cdDisc');
+        const playBtn = document.getElementById('playBtn');
+
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                cdDisc.classList.add('playing');
+                playBtn.innerHTML = '⏸ Pause Song';
+            } else {
+                audio.pause();
+                cdDisc.classList.remove('playing');
+                playBtn.innerHTML = '▶ Play Song';
+            }
+        }
+
+        // Lightbox Functions (ซูมรูปภาพฟิล์ม)
+        const lightboxOverlay = document.getElementById('lightboxOverlay');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxCaption = document.getElementById('lightboxCaption');
+
+        function openLightbox(element) {
+            const img = element.querySelector('img');
+            const caption = element.querySelector('.film-caption-sm');
+            
+            lightboxImg.src = img.src;
+            lightboxCaption.textContent = caption.textContent;
+            lightboxOverlay.classList.add('active');
+        }
+
+        function closeLightbox(event) {
+            // ปิดเมื่อกดปุ่ม X หรือกดพื้นที่สีดำภายนอก
+            if (event.target === lightboxOverlay || event.target.classList.contains('lightbox-close')) {
+                lightboxOverlay.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
